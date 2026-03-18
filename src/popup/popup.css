@@ -63,6 +63,16 @@ body {
   background: var(--void-100);
 }
 
+/* ── APP SHELL ──────────────────────────────── */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  width: 380px;
+  max-height: 620px;
+  background: var(--void-100);
+  overflow: hidden;
+}
+
 /* ── LOADING ──────────────────────────────────────────────── */
 .loading {
   display: flex;
@@ -87,12 +97,21 @@ body {
 }
 
 /* ── POPUP CONTAINER ──────────────────────────────────────── */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  width: 380px;
+  max-height: 620px;
+  background: var(--void-100);
+  overflow: hidden;
+}
+
 .popup {
   display: flex;
   flex-direction: column;
   gap: var(--sp-3);
   padding: var(--sp-3);
-  max-height: 580px;
+  flex: 1;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--void-400) transparent;
@@ -123,48 +142,42 @@ body {
 
 /* ── HEADER ───────────────────────────────────────────────── */
 .popup-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  text-align: center;
-  padding: var(--sp-3) var(--sp-4);
-  background: rgba(5, 5, 16, 0.92);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 var(--sp-4);
+  background: rgba(5, 5, 16, 0.97);
   border-bottom: 1px solid var(--glass-border);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  overflow: hidden;
+  position: relative;
 }
 
 .header-glow {
   position: absolute;
-  top: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 220px;
-  height: 50px;
-  background: radial-gradient(
-    ellipse,
-    rgba(0, 229, 255, 0.25),
-    transparent 70%
-  );
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 100%, rgba(0, 229, 255, 0.12), transparent 70%);
   pointer-events: none;
 }
 
 .header-title {
   font-family: var(--font-display);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #f0f0ff;
+  letter-spacing: 0.06em;
+  color: #00e5ff;
+  text-shadow: 0 0 14px rgba(0, 229, 255, 0.45);
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
 }
 
 .header-icon {
-  font-size: 18px;
-  filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.5));
+  font-size: 20px;
+  line-height: 1;
+  position: relative;
+  filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.6));
 }
 
 /* ── PET STAGE ────────────────────────────────────────────── */

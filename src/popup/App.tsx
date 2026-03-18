@@ -191,14 +191,15 @@ export default function App() {
     petState.xpToNext > 0 ? (petState.xp / petState.xpToNext) * 100 : 0;
 
   return (
-    <div className="popup">
-      {/* Header */}
+    <div className="app-shell">
+      {/* Header — outside scroll area so it's always visible */}
       <header className="popup-header">
         <div className="header-glow" />
-        <h1 className="header-title">
-          <span className="header-icon">🐾</span> Chotu Pet
-        </h1>
+        <span className="header-icon">🐾</span>
+        <span className="header-title">Chotu Pet</span>
       </header>
+
+      <div className="popup">
 
       {/* Pet Preview */}
       <section className="pet-stage glass-card">
@@ -396,6 +397,7 @@ export default function App() {
       <footer className="popup-footer">
         <span>{def.description}</span>
       </footer>
+      </div>
     </div>
   );
 }

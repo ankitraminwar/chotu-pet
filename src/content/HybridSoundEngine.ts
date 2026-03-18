@@ -145,6 +145,11 @@ export class HybridSoundEngine {
     if (!this.enabled || this.muted) return;
     this.init();
 
+    // First user gesture: context now exists — preload profile in background
+    if (this.ctx && this.bufferCache.size === 0 && this.loadingFiles.size === 0) {
+      void this.preloadProfile(this.stage);
+    }
+
     // Handle combo sequences
     const combo = COMBOS[event];
     if (combo) {
@@ -415,7 +420,9 @@ export class HybridSoundEngine {
 
   private async fetchAndDecode(filename: string): Promise<AudioBuffer | null> {
     try {
-      this.init();
+      // Do NOT call this.init() here — AudioContext can only be created/resumed
+      // after a user gesture. Preloading before a gesture must silently skip;
+      // loadAudioFile() will retry on the next play() call (which is user-triggered).
       if (!this.ctx) return null;
 
       const url = this.soundBaseUrl + filename;

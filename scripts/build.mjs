@@ -1,6 +1,6 @@
 import { build } from "esbuild";
-import { cpSync, mkdirSync, existsSync, writeFileSync, readdirSync } from "fs";
-import { deflateSync } from "zlib";
+import { cpSync, mkdirSync, existsSync, readdirSync } from "fs";
+import sharp from "sharp";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -48,105 +48,18 @@ if (existsSync(soundsSrc)) {
   console.log("⚠ No sounds directory found, skipping audio copy");
 }
 
-// ── Generate PNG icons ──
-function createPNG(size, r, g, b) {
-  const width = size;
-  const height = size;
-  const rawLen = (1 + width * 4) * height;
-  const raw = Buffer.alloc(rawLen);
-
-  const cx = width / 2;
-  const cy = height / 2;
-  const radius = width * 0.42;
-
-  for (let y = 0; y < height; y++) {
-    const offset = y * (1 + width * 4);
-    raw[offset] = 0; // no filter
-    for (let x = 0; x < width; x++) {
-      const px = offset + 1 + x * 4;
-      const dist = Math.sqrt((x - cx) ** 2 + (y - cy) ** 2);
-      if (dist <= radius) {
-        raw[px] = r;
-        raw[px + 1] = g;
-        raw[px + 2] = b;
-        raw[px + 3] = 255;
-      } else if (dist <= radius + 1.5) {
-        // Anti-aliased edge
-        const alpha = Math.max(
-          0,
-          Math.min(255, Math.round((radius + 1.5 - dist) * 170)),
-        );
-        raw[px] = r;
-        raw[px + 1] = g;
-        raw[px + 2] = b;
-        raw[px + 3] = alpha;
-      } else {
-        raw[px] = 0;
-        raw[px + 1] = 0;
-        raw[px + 2] = 0;
-        raw[px + 3] = 0;
-      }
-    }
-  }
-
-  const compressed = deflateSync(raw);
-
-  function uint32BE(n) {
-    const buf = Buffer.alloc(4);
-    buf.writeUInt32BE(n, 0);
-    return buf;
-  }
-
-  function crc32(buf) {
-    let c = 0xffffffff;
-    for (let i = 0; i < buf.length; i++) {
-      c ^= buf[i];
-      for (let j = 0; j < 8; j++) {
-        c = (c >>> 1) ^ (c & 1 ? 0xedb88320 : 0);
-      }
-    }
-    return (c ^ 0xffffffff) >>> 0;
-  }
-
-  function chunk(type, data) {
-    const typeData = Buffer.concat([Buffer.from(type), data]);
-    return Buffer.concat([
-      uint32BE(data.length),
-      typeData,
-      uint32BE(crc32(typeData)),
-    ]);
-  }
-
-  const ihdrData = Buffer.concat([
-    uint32BE(width),
-    uint32BE(height),
-    Buffer.from([8, 6, 0, 0, 0]), // 8-bit RGBA
-  ]);
-
-  return Buffer.concat([
-    Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), // PNG signature
-    chunk("IHDR", ihdrData),
-    chunk("IDAT", compressed),
-    chunk("IEND", Buffer.alloc(0)),
-  ]);
-}
-
+// ── Generate PNG icons from logo ──
+const logoSrc = resolve(root, "logo.png");
 const iconsDir = resolve(dist, "icons");
 if (!existsSync(iconsDir)) mkdirSync(iconsDir, { recursive: true });
 
-// Chotu Pet cyan circle icon
-const cyan = { r: 0, g: 229, b: 255 };
-writeFileSync(
-  resolve(iconsDir, "icon16.png"),
-  createPNG(16, cyan.r, cyan.g, cyan.b),
-);
-writeFileSync(
-  resolve(iconsDir, "icon48.png"),
-  createPNG(48, cyan.r, cyan.g, cyan.b),
-);
-writeFileSync(
-  resolve(iconsDir, "icon128.png"),
-  createPNG(128, cyan.r, cyan.g, cyan.b),
+await Promise.all(
+  [16, 48, 128].map((size) =>
+    sharp(logoSrc)
+      .resize(size, size, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
+      .png()
+      .toFile(resolve(iconsDir, `icon${size}.png`)),
+  ),
 );
 
 console.log("✓ icons generated");

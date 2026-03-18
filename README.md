@@ -138,3 +138,20 @@ npm run dev
 │  cursor proximity.  │  │  particle bursts.   │  │  the code.          │
 └─────────────────────┘  └─────────────────────┘  └─────────────────────┘
 ```
+
+---
+
+## 🔒 Privacy Policy
+
+Chotu Pet collects no user data whatsoever.
+
+**What is stored:** Chotu's name, hunger, happiness, energy, XP, level, skin, and your settings are saved locally on your device using Chrome's built-in `chrome.storage.local` API.
+
+**What is NOT stored:** No URLs, browsing history, personal information, or usage analytics are collected or transmitted.
+
+**Third parties:** No third-party services, analytics tools, or external servers are used.
+
+**Data deletion:** Uninstalling the extension removes all data.
+
+Last updated: March 2026  
+Contact: [GitHub Issues](https://github.com/ankitraminwar/chotu-pet/issues)

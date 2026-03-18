@@ -14,7 +14,7 @@
     "sounds:check": "node scripts/check-sounds.mjs",
     "type-check": "tsc -b",
     "preflight": "npm run type-check && npm run lint && npm run build",
-    "package": "npm run build && cd dist && zip -r ../releases/chotu-pet-v$(node -p \"require('../package.json').version\").zip . && cd ..",
+    "package": "npm run build && node scripts/package.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -49,7 +49,9 @@ if (existsSync(soundsSrc)) {
 }
 
 // ── Generate PNG icons from logo ──
-const logoSrc = resolve(root, "logo.png");
+const logoSrc = existsSync(resolve(root, "src/assets/logo.png"))
+  ? resolve(root, "src/assets/logo.png")
+  : resolve(root, "public/logo.png");
 const iconsDir = resolve(dist, "icons");
 if (!existsSync(iconsDir)) mkdirSync(iconsDir, { recursive: true });
 

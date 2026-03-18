@@ -56,7 +56,10 @@ if (!existsSync(iconsDir)) mkdirSync(iconsDir, { recursive: true });
 await Promise.all(
   [16, 48, 128].map((size) =>
     sharp(logoSrc)
-      .resize(size, size, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
+      .resize(size, size, {
+        fit: "contain",
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+      })
       .png()
       .toFile(resolve(iconsDir, `icon${size}.png`)),
   ),

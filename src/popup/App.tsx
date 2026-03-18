@@ -1,5 +1,4 @@
 import { useState, useEffect, type FC } from "react";
-import logoUrl from "../assets/logo.png";
 import type {
   PetType,
   PetMood,
@@ -196,7 +195,8 @@ export default function App() {
       {/* Header — outside scroll area so it's always visible */}
       <header className="popup-header">
         <div className="header-glow" />
-        <img src={logoUrl} alt="Chotu Pet" className="header-logo" />
+        <span className="header-icon">🐾</span>
+        <span className="header-title">Chotu Pet</span>
       </header>
 
       <div className="popup">

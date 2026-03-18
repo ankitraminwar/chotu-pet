@@ -146,8 +146,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  height: 48px;
+  height: 72px;
   padding: 0 var(--sp-4);
   background: rgba(5, 5, 16, 0.97);
   border-bottom: 1px solid var(--glass-border);
@@ -163,21 +162,12 @@ body {
   pointer-events: none;
 }
 
-.header-title {
-  font-family: var(--font-display);
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: #00e5ff;
-  text-shadow: 0 0 14px rgba(0, 229, 255, 0.45);
+.header-logo {
+  height: 56px;
+  width: auto;
   position: relative;
-}
-
-.header-icon {
-  font-size: 20px;
-  line-height: 1;
-  position: relative;
-  filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.6));
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0, 229, 255, 0.3));
 }
 
 /* ── PET STAGE ────────────────────────────────────────────── */

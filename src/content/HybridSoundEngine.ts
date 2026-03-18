@@ -146,7 +146,11 @@ export class HybridSoundEngine {
     this.init();
 
     // First user gesture: context now exists — preload profile in background
-    if (this.ctx && this.bufferCache.size === 0 && this.loadingFiles.size === 0) {
+    if (
+      this.ctx &&
+      this.bufferCache.size === 0 &&
+      this.loadingFiles.size === 0
+    ) {
       void this.preloadProfile(this.stage);
     }
 

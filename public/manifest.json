@@ -3,7 +3,7 @@
   "name": "Chotu Pet 🐾",
   "short_name": "Chotu Pet",
   "version": "1.0.0",
-  "description": "Your tiny Chotu lives on every webpage. Feed him by visiting new sites, watch him evolve through 5 stages — zero tracking, 100% local.",
+  "description": "Your tiny pixel pet lives on every webpage. Visit new sites to feed him and watch him evolve through 5 stages. 100% free!",
   "permissions": ["storage", "tabs", "alarms"],
   "action": {
     "default_popup": "index.html",

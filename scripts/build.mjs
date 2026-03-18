@@ -17,6 +17,7 @@ await build({
   target: "chrome120",
   minify: true,
   treeShaking: true,
+  drop: ["console", "debugger"],
 });
 
 console.log("✓ content.js built");
@@ -30,6 +31,7 @@ await build({
   target: "chrome120",
   minify: true,
   treeShaking: true,
+  drop: ["console", "debugger"],
 });
 
 console.log("✓ background.js built");
